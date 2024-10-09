@@ -1,5 +1,8 @@
 // Written by Sidharth S, referenced from Canvas
 
+// This shader is for toon shading and color grading. It makes its own lighting system to make the sharp shade changes-
+// the toon shading possible!
+
 Shader "Custom/ToonShader"
 {
     Properties
