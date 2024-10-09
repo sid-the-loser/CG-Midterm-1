@@ -6,6 +6,7 @@ Shader "Custom/ToonShader"
     {
         _Color ("Color", Color) = (1, 1, 1, 1) // displays a property on unity editor that lets you select a color
         _RampTex ("Ramp Texture", 2D) = "white" {} // texture that we will be using as the shadow
+        _ColorTint ("Color Tint", Color) = (1, 1, 1, 1) // displays a color selector in unity editor
     }
     SubShader
     {
@@ -15,6 +16,7 @@ Shader "Custom/ToonShader"
 
         float4 _Color; // getting the color from properties 
         sampler2D _RampTex; // getting the ramp texture from properties
+        float4 _ColorTint;
 
         struct Input
         {
@@ -40,7 +42,9 @@ Shader "Custom/ToonShader"
 
         void surf(Input IN, inout SurfaceOutput o)
         {
-            o.Albedo = _Color.rgb; // The albedo/diffuse color of the surface is set to the value we get from properties
+            o.Albedo = _Color.rgb * _ColorTint.rgb; // The albedo/diffuse color of the surface is set to the value we-
+                                                    // get from properties and the tint color is multiplied to it to-
+                                                    // add the tint/color grading effect
         }
         
         ENDCG
