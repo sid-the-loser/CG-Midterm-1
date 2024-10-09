@@ -16,7 +16,7 @@ Shader "Custom/ToonShader"
 
         float4 _Color; // getting the color from properties 
         sampler2D _RampTex; // getting the ramp texture from properties
-        float4 _ColorTint;
+        float4 _ColorTint; // getting the color tint from properties
 
         struct Input
         {
