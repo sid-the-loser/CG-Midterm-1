@@ -20,7 +20,8 @@ Shader "Custom/ToonShader"
 
         struct Input
         {
-            float2 uv_MainTex; 
+            float2 uv_MainTex; // Gets the uv of the player texture (however, we are not using this at all in this-
+                               // shader)
         };
 
         float4 LightingToonRamp(SurfaceOutput s, fixed3 lightDir, fixed atten) // defining our custom toon shader-
