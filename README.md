@@ -10,4 +10,4 @@ All of the explanations can be found in the shader files themselves. Easy to loo
 
 Build is in the releases section!
 
-# Have a nice day!
+## Have a nice day!
