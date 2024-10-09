@@ -1,9 +1,11 @@
+// Written by Sidharth S, referenced from Canvas
+
 Shader "Custom/ToonShader"
 {
     Properties
     {
-        _Color ("Color", Color) = (1, 1, 1, 1)
-        _RampTex ("Ramp Texture", 2D) = "white" {}
+        _Color ("Color", Color) = (1, 1, 1, 1) // displays a property on unity editor that lets you select a color
+        _RampTex ("Ramp Texture", 2D) = "white" {} // texture that we will be using as the shadow
     }
     SubShader
     {
@@ -11,33 +13,37 @@ Shader "Custom/ToonShader"
 
         #pragma surface surf ToonRamp
 
-        float4 _Color;
-        sampler2D _RampTex;
+        float4 _Color; // getting the color from properties 
+        sampler2D _RampTex; // getting the ramp texture from properties
 
         struct Input
         {
-            float2 uv_MainTex;
+            float2 uv_MainTex; 
         };
 
-        float4 LightingToonRamp(SurfaceOutput s, fixed3 lightDir, fixed atten)
+        float4 LightingToonRamp(SurfaceOutput s, fixed3 lightDir, fixed atten) // defining our custom toon shader-
+                                                                               // lighting
         {
-            float diff = dot(s.Normal, lightDir);
-            float h = diff * 0.5 + 0.5;
-            float2 rh = h;
-            float3 ramp = tex2D(_RampTex, rh).rgb;
+            float diff = dot(s.Normal, lightDir); // gets the dot product between the normal of the surface of the-
+                                                  // object and the direction of the light
+            float2 rh = diff * 0.5 + 0.5; // gets a uv value that will be taken from the ramp texture and used to blend-
+                                          // the color of the object to look shaded
+            float3 ramp = tex2D(_RampTex, rh).rgb; // gets the particular uv from the ramp texture and stores it in-
+                                                   // "ramp"
 
-            float4 c;
-            c.rgb = s.Albedo * _LightColor0.rgb * ramp;
-            c.a = s.Alpha;
+            float4 c; // c is used to keep track of the color of the pixel on the object surface
+            c.rgb = s.Albedo * _LightColor0.rgb * ramp; // all of the values are blended together to form the final-
+                                                        // pixel color
+            c.a = s.Alpha; // the alpha is set directly from the surface
             return c;
         }
 
         void surf(Input IN, inout SurfaceOutput o)
         {
-            o.Albedo = _Color.rgb;
+            o.Albedo = _Color.rgb; // The albedo/diffuse color of the surface is set to the value we get from properties
         }
         
         ENDCG
     }
-    FallBack "Diffuse"
+    FallBack "Diffuse" // fallback, in case something breaks in the shader that we wrote
 }
